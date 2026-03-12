@@ -1,12 +1,12 @@
-import { TaskPriority } from "@prisma/client";
 import {
+  IsString,
+  IsOptional,
   IsEnum,
   IsInt,
-  IsOptional,
-  IsString,
-  MaxLength,
   Min,
+  MaxLength,
 } from "class-validator";
+import { TaskPriority } from "@prisma/client";
 
 export class CreateTaskDto {
   @IsString()

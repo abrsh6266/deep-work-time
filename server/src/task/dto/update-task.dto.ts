@@ -1,18 +1,18 @@
-import { TaskPriority, TaskStatus } from "@prisma/client";
 import {
+  IsString,
+  IsOptional,
   IsEnum,
   IsInt,
-  IsOptional,
-  IsString,
-  MaxLength,
   Min,
+  MaxLength,
 } from "class-validator";
+import { TaskStatus, TaskPriority } from "@prisma/client";
 
-export class CreateTaskDto {
+export class UpdateTaskDto {
   @IsOptional()
   @IsString()
   @MaxLength(255)
-  title!: string;
+  title?: string;
 
   @IsOptional()
   @IsString()
@@ -20,15 +20,20 @@ export class CreateTaskDto {
   description?: string;
 
   @IsOptional()
-  @IsEnum(TaskPriority)
-  priority?: TaskPriority;
+  @IsEnum(TaskStatus)
+  status?: TaskStatus;
 
   @IsOptional()
-  @IsEnum(TaskStatus)
-  status?: TaskPriority;
+  @IsEnum(TaskPriority)
+  priority?: TaskPriority;
 
   @IsOptional()
   @IsInt()
   @Min(1)
   estimatedPomodoros?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  completedPomodoros?: number;
 }
