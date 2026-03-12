@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SessionType {
+  FOCUS
+  SHORT_BREAK
+  LONG_BREAK
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model Session {
+  id         String      @id @default(uuid())
+  type       SessionType
+  duration   Int
+  elapsed    Int
+  compeleted Boolean
+  taskId     String?
+  task       Task?       @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  startedAt  DateTime
+  endedAt    DateTime?
+  createdAt  DateTime    @default(now())
+
+  @@index([startedAt])
+  @@index([taskId])
+}
+
+model Task {
+  id                  String       @id @default(uuid())
+  title               String
+  description         String?
+  status              TaskStatus   @default(TODO)
+  priority            TaskPriority @default(MEDIUM)
+  estimatedPomodoros  Int          @default(1)
+  compeletedPomodoros Int          @default(0)
+  sessions            Session[]
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@index([status])
+}
+
+model BlockedSite {
+  id        String   @id @default(uuid())
+  domain    String   @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model DailyStore {
+  id             String   @id @default(uuid())
+  date           DateTime @unique @db.Date
+  focusMinutes   Int      @default(0)
+  sessionCount   Int      @default(0)
+  completedTasks Int      @default(0)
+  score          Float    @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
