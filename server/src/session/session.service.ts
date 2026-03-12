@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateSessionDto } from "./dto/create-session.dto";
-import { string } from "zod";
 
 @Injectable()
 export class SessionService {
@@ -14,13 +13,14 @@ export class SessionService {
         duration: dto.duration,
         elapsed: dto.elapsed,
         completed: dto.completed,
-        taskId: dto.taskId,
+        taskId: dto.taskId || null,
         startedAt: new Date(dto.startedAt),
         endedAt: new Date(),
       },
       include: { task: true },
     });
   }
+
   async findAll(page = 1, limit = 20) {
     const skip = (page - 1) * limit;
 
@@ -42,6 +42,7 @@ export class SessionService {
       totalPages: Math.ceil(total / limit),
     };
   }
+
   async findByDate(date: string) {
     const startOfDay = new Date(date);
     startOfDay.setHours(0, 0, 0, 0);
@@ -59,17 +60,15 @@ export class SessionService {
       include: { task: true },
     });
   }
+
   async findOne(id: string) {
     return this.prisma.session.findUnique({
       where: { id },
-      include: {
-        task: true,
-      },
+      include: { task: true },
     });
   }
+
   async delete(id: string) {
-    return this.prisma.session.delete({
-      where: { id },
-    });
+    return this.prisma.session.delete({ where: { id } });
   }
 }

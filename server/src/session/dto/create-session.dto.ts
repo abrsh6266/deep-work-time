@@ -1,12 +1,12 @@
-import { SessionType } from "@prisma/client";
 import {
-  IsBoolean,
-  IsDateString,
   IsEnum,
   IsInt,
+  IsBoolean,
   IsOptional,
   IsString,
+  IsDateString,
 } from "class-validator";
+import { SessionType } from "@prisma/client";
 
 export class CreateSessionDto {
   @IsEnum(SessionType)
