@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum SessionType {
@@ -26,32 +27,32 @@ enum TaskPriority {
 }
 
 model Session {
-  id         String      @id @default(uuid())
-  type       SessionType
-  duration   Int
-  elapsed    Int
-  compeleted Boolean
-  taskId     String?
-  task       Task?       @relation(fields: [taskId], references: [id], onDelete: SetNull)
-  startedAt  DateTime
-  endedAt    DateTime?
-  createdAt  DateTime    @default(now())
+  id        String      @id @default(uuid())
+  type      SessionType
+  duration  Int // planned duration in seconds
+  elapsed   Int // actual elapsed seconds
+  completed Boolean     @default(false)
+  taskId    String?
+  task      Task?       @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  startedAt DateTime
+  endedAt   DateTime?
+  createdAt DateTime    @default(now())
 
   @@index([startedAt])
   @@index([taskId])
 }
 
 model Task {
-  id                  String       @id @default(uuid())
-  title               String
-  description         String?
-  status              TaskStatus   @default(TODO)
-  priority            TaskPriority @default(MEDIUM)
-  estimatedPomodoros  Int          @default(1)
-  compeletedPomodoros Int          @default(0)
-  sessions            Session[]
-  createdAt           DateTime     @default(now())
-  updatedAt           DateTime     @updatedAt
+  id                 String       @id @default(uuid())
+  title              String
+  description        String?
+  status             TaskStatus   @default(TODO)
+  priority           TaskPriority @default(MEDIUM)
+  estimatedPomodoros Int          @default(1)
+  completedPomodoros Int          @default(0)
+  sessions           Session[]
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
 
   @@index([status])
 }
@@ -63,13 +64,15 @@ model BlockedSite {
   createdAt DateTime @default(now())
 }
 
-model DailyStore {
+model DailyScore {
   id             String   @id @default(uuid())
   date           DateTime @unique @db.Date
   focusMinutes   Int      @default(0)
-  sessionCount   Int      @default(0)
+  sessionsCount  Int      @default(0)
   completedTasks Int      @default(0)
   score          Float    @default(0)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+
+  @@index([date])
 }
