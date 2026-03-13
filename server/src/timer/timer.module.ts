@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
-import { SessionService } from "../session/session.service";
+import { SessionModule } from "../session/session.module";
 import { TimerController } from "./timer.controller";
 import { TimerGateway } from "./timer.gateway";
 import { TimerService } from "./timer.service";
 
 @Module({
-  imports: [SessionService],
+  imports: [SessionModule],
   controllers: [TimerController],
   providers: [TimerGateway, TimerService],
   exports: [TimerService],
