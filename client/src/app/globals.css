@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --neon-pink: #ff2d95;
+  --neon-purple: #b026ff;
+  --neon-green: #39ff14;
+  --neon-blue: #00f0ff;
+}
+
+body {
+  background-color: #0a0a0f;
+  color: #ffffff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #12121a;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff2d95;
+  border-radius: 3px;
+}
+
+/* Neon text glow */
+.neon-text-pink {
+  text-shadow: 0 0 7px var(--neon-pink), 0 0 10px var(--neon-pink),
+    0 0 21px var(--neon-pink), 0 0 42px var(--neon-pink);
+}
+.neon-text-purple {
+  text-shadow: 0 0 7px var(--neon-purple), 0 0 15px var(--neon-purple),
+    0 0 30px var(--neon-purple);
+}
+.neon-text-green {
+  text-shadow: 0 0 7px var(--neon-green), 0 0 15px var(--neon-green);
+}
+
+/* Spotlight gradient */
+.spotlight {
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(176, 38, 255, 0.12) 0%,
+    transparent 60%
+  );
+}
+
+/* Stage floor */
+.stage-floor {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 45, 149, 0.04) 100%
+  );
+}
+
+/* Range slider styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 4px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ff2d95;
+  cursor: pointer;
+  box-shadow: 0 0 10px #ff2d95, 0 0 20px rgba(255, 45, 149, 0.4);
+  border: 2px solid #fff;
+  transition: transform 0.15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ff2d95;
+  cursor: pointer;
+  box-shadow: 0 0 10px #ff2d95, 0 0 20px rgba(255, 45, 149, 0.4);
+  border: 2px solid #fff;
+}
