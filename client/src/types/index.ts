@@ -55,14 +55,14 @@ export interface Task {
   description: string | null;
   status: TaskStatus;
   priority: TaskPriority;
-  estimatedPromodoros: number;
-  completedPromodoros: number;
+  estimatedPomodoros: number;
+  completedPomodoros: number;
   sessions: Session[];
   createdAt: string;
-  updateddAt: string;
+  updatedAt: string;
 }
 
-export interface blookedSite {
+export interface BlockedSite {
   id: string;
   domain: string;
   isActive: boolean;
@@ -72,8 +72,10 @@ export interface blookedSite {
 export interface DailyScore {
   date: string;
   focusMinutes: number;
-  sessionCount: number;
+  sessionsCount: number;
   completedSessions: number;
+  completedTasks: number;
+  score: number;
 }
 
 export interface WeeklyStat {
@@ -86,7 +88,8 @@ export interface WeeklyStat {
 export interface OverallStats {
   totalSessions: number;
   completedSessions: number;
-  totaltasks: number;
+  totalTasks: number;
+  completedTasks: number;
   totalFocusMinutes: number;
   totalFocusHours: number;
   currentStreak: number;
