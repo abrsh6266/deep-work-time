@@ -1,10 +1,11 @@
-import { BlockedSite } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { BlockedSite } from "@/types";
 
-interface BlockListState {
+interface BlocklistState {
   sites: BlockedSite[];
 }
-const initialState: BlockListState = {
+
+const initialState: BlocklistState = {
   sites: [],
 };
 
@@ -30,6 +31,6 @@ const blocklistSlice = createSlice({
   },
 });
 
-export const { addSite, removeSite, setSites, toggleSite } =
+export const { setSites, addSite, removeSite, toggleSite } =
   blocklistSlice.actions;
 export default blocklistSlice.reducer;

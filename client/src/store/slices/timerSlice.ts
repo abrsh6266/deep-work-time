@@ -1,15 +1,15 @@
-import { SessionType, TimerState } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TimerState, SessionType } from "@/types";
 
 const initialState: TimerState = {
-  currentTaskId: null,
-  isPaused: false,
   isRunning: false,
-  pomodorosCompleted: 0,
+  isPaused: false,
   secondsRemaining: 25 * 60,
-  sessionType: SessionType.FOCUS,
-  startedAt: null,
   totalSeconds: 25 * 60,
+  sessionType: SessionType.FOCUS,
+  currentTaskId: null,
+  pomodorosCompleted: 0,
+  startedAt: null,
 };
 
 const timerSlice = createSlice({
@@ -23,15 +23,17 @@ const timerSlice = createSlice({
       state.sessionType = action.payload;
       switch (action.payload) {
         case SessionType.FOCUS:
-          state.secondsRemaining = 60 * 25;
-          state.totalSeconds = 60 * 25;
+          state.secondsRemaining = 25 * 60;
+          state.totalSeconds = 25 * 60;
           break;
         case SessionType.SHORT_BREAK:
-          state.secondsRemaining = 5 * 25;
-          state.totalSeconds = 5 * 25;
+          state.secondsRemaining = 5 * 60;
+          state.totalSeconds = 5 * 60;
+          break;
         case SessionType.LONG_BREAK:
-          state.secondsRemaining = 15 * 25;
-          state.totalSeconds = 15 * 25;
+          state.secondsRemaining = 15 * 60;
+          state.totalSeconds = 15 * 60;
+          break;
       }
     },
     setCurrentTaskId(state, action: PayloadAction<string | null>) {
@@ -45,6 +47,6 @@ const timerSlice = createSlice({
   },
 });
 
-export const { setCurrentTaskId, setSessionType, setTimerState, tick } =
+export const { setTimerState, setSessionType, setCurrentTaskId, tick } =
   timerSlice.actions;
 export default timerSlice.reducer;

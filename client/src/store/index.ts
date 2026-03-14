@@ -1,10 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+import timerReducer from "./slices/timerSlice";
+import taskReducer from "./slices/taskSlice";
+import blocklistReducer from "./slices/blocklistSlice";
 
 export const store = configureStore({
   reducer: {
-    timer: () => "timer",
-    tasks: () => "tasks",
-    blocklist: () => "blocklist",
+    timer: timerReducer,
+    tasks: taskReducer,
+    blocklist: blocklistReducer,
   },
 });
 

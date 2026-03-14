@@ -1,17 +1,18 @@
-import { Task } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Task } from "@/types";
 
 interface TaskState {
   selectedTaskId: string | null;
   tasks: Task[];
 }
+
 const initialState: TaskState = {
   selectedTaskId: null,
   tasks: [],
 };
 
 const taskSlice = createSlice({
-  name: "task",
+  name: "tasks",
   initialState,
   reducers: {
     setSelectedTask(state, action: PayloadAction<string | null>) {
