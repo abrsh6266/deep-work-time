@@ -1,9 +1,9 @@
 "use client";
 
-import { RootState } from "@/store";
-import { useSelector } from "react-redux";
-import { useWebSocket } from "./useWebSocket";
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { useWebSocket } from "./useWebSocket";
 import { SessionType } from "@/types";
 
 export function useTimer() {
@@ -11,8 +11,8 @@ export function useTimer() {
   const { emit } = useWebSocket();
 
   const start = useCallback(
-    (sessionType?: SessionType, taskIId?: string | null) => {
-      emit("timer:start", { sessionType, taskIId });
+    (sessionType?: SessionType, taskId?: string | null) => {
+      emit("timer:start", { sessionType, taskId });
     },
     [emit],
   );
@@ -20,9 +20,11 @@ export function useTimer() {
   const pause = useCallback(() => {
     emit("timer:pause");
   }, [emit]);
+
   const reset = useCallback(() => {
     emit("timer:reset");
   }, [emit]);
+
   const stop = useCallback(() => {
     emit("timer:stop");
   }, [emit]);
@@ -37,7 +39,9 @@ export function useTimer() {
   const formatTime = useCallback((seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    return `${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
   }, []);
 
   const progress =
@@ -50,9 +54,10 @@ export function useTimer() {
   return {
     ...timerState,
     start,
+    pause,
+    reset,
     stop,
     setType,
-    reset,
     formatTime,
     progress,
   };
