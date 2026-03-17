@@ -3,16 +3,22 @@ import { z } from "zod";
 
 dotenv.config();
 
-const envSchema = z.object({
-  NODE_ENV: z
-    .enum(["development", "test", "production"])
-    .default("development"),
-  PORT: z.coerce.number().int().positive().default(3000),
-  DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
-  LOG_LEVEL: z
-    .enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"])
-    .default("info"),
-});
+const envSchema = z
+  .object({
+    NODE_ENV: z
+      .enum(["development", "test", "production"])
+      .default("development"),
+    PORT: z.coerce.number().int().positive().optional(),
+    SERVER_PORT: z.coerce.number().int().positive().optional(),
+    DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
+    LOG_LEVEL: z
+      .enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"])
+      .default("info"),
+  })
+  .transform((env) => ({
+    ...env,
+    PORT: env.PORT ?? env.SERVER_PORT ?? 3000,
+  }));
 
 const parsedEnv = envSchema.safeParse(process.env);
 
