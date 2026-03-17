@@ -1,11 +1,14 @@
 "use client";
 
+import FocusScoreCard from "@/components/stats/FocusScoreCard";
+import PomodoroTimer from "@/components/timer/PomodoroTimer";
 import React from "react";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-club-dark">
-      
-    </main>
+    <div className="max-w-2xl mx-auto space-y-8">
+      <PomodoroTimer />
+      <FocusScoreCard />
+    </div>
   );
 }
